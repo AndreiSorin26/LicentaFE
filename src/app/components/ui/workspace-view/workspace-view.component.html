@@ -1,0 +1,45 @@
+<button nz-button nzType="primary" nzShape="circle" nz-tooltip nzTooltipTitle="Add new table" nzTooltipPlacement="right" (click)="openAddTable()">
+    <span nz-icon nzType="plus"></span>
+</button>
+
+<nz-list nzGrid [nzLoading]="fetchingTables">
+    @if(!fetchingTables)
+    {
+        @if(tables.length == 0)
+        {
+            <nz-list-empty></nz-list-empty>
+        }
+        @else
+        {
+            <div nz-row [nzGutter]="16">
+                @for (table of tables; track table)
+                {
+                    <div nz-col>
+                        <nz-list-item>
+                            <nz-card [nzTitle]="table.name">
+                                <ul>
+                                    @for(field of table.columns; track field)
+                                    {
+                                        <li>
+                                            <p>
+                                                {{field.name}} [<i>{{field.type}}</i>]
+                                            </p>
+                                        </li>
+                                    }
+                                </ul>
+
+                                <a nz-button nzType="text" (click)="selectTable(table)">
+                                    <span style="color: #40a9ff">Open</span>
+                                </a>
+                                <a nz-button nzType="text" nzDanger nz-popconfirm nzPopconfirmTitle="Are you sure delete this table?" nzPopconfirmPlacement="bottom" (nzOnConfirm)="dropTable(table)">Delete</a>
+                            </nz-card>
+                        </nz-list-item>
+                    </div>
+                }
+            </div>
+        }
+    }
+</nz-list>
+
+<app-add-table-modal [(isVisible)]="addTableModalVisible" (handleOk)="addTable($event)" (handleCancel)="cancelAddTable()">
+</app-add-table-modal>

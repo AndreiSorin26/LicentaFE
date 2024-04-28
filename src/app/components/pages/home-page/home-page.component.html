@@ -1,0 +1,43 @@
+<nz-layout class="layout">
+    <nz-sider>
+        <div class="logo"></div>
+        <ul nz-menu nzTheme="dark" nzMode="inline">
+            <li nz-menu-item (click)="location = ['My Workspace']">
+                <span nz-icon nzType="audit"></span>
+                <span>My Workspace</span>
+            </li>
+            <li nz-menu-item (click)="location = ['Prompt Examples']">
+                <span nz-icon nzType="edit"></span>
+                <span>Prompt Examples</span>
+            </li>
+        </ul>
+    </nz-sider>
+    <nz-layout class="right-layout">
+        <nz-header>
+            <nz-breadcrumb class="header-text">
+                @for(breadcrumb of location; track breadcrumb; let index = $index)
+                {
+                    <nz-breadcrumb-item class="clickable" (click)="dropLocation(index)">{{breadcrumb}}</nz-breadcrumb-item>
+                }
+            </nz-breadcrumb>
+        </nz-header>
+        <nz-content>
+            @switch (getCurrentLocation())
+            {
+                @case("My Workspace")
+                {
+                    <app-workspace-view (tableSelected)="selectTable($event)"></app-workspace-view>
+                }
+                @case('Table')
+                {
+                    <app-table-view [table]="selectedTable"></app-table-view>
+                }
+                @case('Prompt Examples')
+                {
+                    <app-prompt-examples-view></app-prompt-examples-view>
+                }
+            }
+        </nz-content>
+        <nz-footer></nz-footer>
+    </nz-layout>
+</nz-layout>

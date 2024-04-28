@@ -1,0 +1,32 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Add new table" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOK()">
+    <ng-container *nzModalContent>
+        <input nz-input placeholder="Table name" [(ngModel)]="table.name" type="text" />
+        <nz-divider></nz-divider>
+        <button nz-button nzType="primary" nzShape="circle" nz-tooltip nzTooltipTitle="Add new column" nzTooltipPlacement="right" (click)="addNewColumn()">
+            <span nz-icon nzType="plus"></span>
+        </button>
+
+        <br/>
+
+        @for(column of table.columns; track column)
+        {
+            <div class="input-group">
+                <nz-input-group nzCompact>
+                    <nz-select [(ngModel)]="column.type">
+                        @for(column of Object.values(ValueType); track column)
+                        {
+                            <nz-option [nzLabel]="column" [nzValue]="column"></nz-option>
+                        }
+                    </nz-select>
+                    <input class="half-input-box" type="text" nz-input placeholder="Column name" [(ngModel)]="column.name" />
+                </nz-input-group>
+            </div>
+
+            <nz-divider nzType="vertical"></nz-divider>
+
+            <button nz-button nzType="primary" nzShape="circle" nzDanger (click)="deleteColumn(column)">
+                <span nz-icon nzType="delete"></span>
+            </button>
+        }
+    </ng-container>
+</nz-modal>

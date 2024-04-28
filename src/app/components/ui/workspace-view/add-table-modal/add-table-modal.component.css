@@ -1,0 +1,14 @@
+.half-input-box
+{
+    width: 50%;
+}
+
+nz-input-group
+{
+    margin: 1vh;
+}
+
+.input-group
+{
+    display: inline-block;
+}

@@ -1,0 +1,22 @@
+<nz-tabset nzType="card">
+    @for(tab of tabs; track tab)
+    {
+        <nz-tab [nzTitle]="titleTemplate">
+            <ng-template #titleTemplate>
+                <span nz-icon [nzType]="tab.icon"></span>
+                {{ tab.title }}
+            </ng-template>
+            @switch (tab.component)
+            {
+                @case('add-items-tab')
+                {
+                    <app-add-items-tab [table]="table"></app-add-items-tab>
+                }
+                @case('query-table-tab')
+                {
+                    <app-query-table-tab></app-query-table-tab>
+                }
+            }
+        </nz-tab>
+    }
+</nz-tabset>

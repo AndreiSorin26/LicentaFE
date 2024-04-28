@@ -1,0 +1,28 @@
+<button nz-button nzType="primary" nzShape="circle" [nzLoading]="generatingQuery" nz-tooltip nzTooltipTitle="Generate query example" nzTooltipPlacement="right" (click)="generateNewQuery()">
+    <span nz-icon nzType="redo"></span>
+</button>
+
+<div
+    class="wrapper"
+    nz-flex
+    nzJustify="center"
+    nzAlign="center"
+>
+    @if(generatingQuery)
+    {
+        <h1>
+            {{query}}
+        </h1>
+    }
+    @else
+    {
+        <ng-template #sqlQueryTemplate>
+            <div>
+                <p>{{sqlQuery}}</p>
+            </div>
+        </ng-template>
+        <h1 [@fadeAway]="promptState" class="highlight" nz-popover nzPopoverTitle="SQL Query" [nzPopoverContent]="sqlQueryTemplate" nzPopoverPlacement="top">
+            {{query}}
+        </h1>
+    }
+</div>

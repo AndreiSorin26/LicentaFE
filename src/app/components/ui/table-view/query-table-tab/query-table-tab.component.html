@@ -1,0 +1,16 @@
+<nz-select [(ngModel)]="model">
+    <nz-option nzLabel="My Chat" nzValue="My Chat"></nz-option>
+    <nz-option nzLabel="ChatGPT" nzValue="ChatGPT"></nz-option>
+    <nz-option nzLabel="LLaMA" nzValue="LLaMA"></nz-option>
+</nz-select>
+
+<nz-divider></nz-divider>
+
+<nz-input-group nzSearch [nzAddOnAfter]="searchSuffixIconButton">
+    <ng-template #searchSuffixIconButton>
+        <button nz-button nzType="primary" nzSearch (click)="sendQuery()">
+            <span nz-icon nzType="search"></span>
+        </button>
+    </ng-template>
+    <input type="text" nz-input placeholder="Input query here" [(ngModel)]="queryText"/>
+</nz-input-group>

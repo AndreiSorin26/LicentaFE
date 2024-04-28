@@ -1,0 +1,40 @@
+.error
+{
+    color: red;
+    font-family: "Times New Roman", serif;
+}
+
+.save
+{
+    margin-right: 8px;
+}
+
+table
+{
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+th
+{
+    text-align: center;
+    background-color: #40a9ff; //rgba(204, 204, 204, 0.5);
+    padding: 1vh 0 1vh 0;
+}
+
+td
+{
+    text-align: center;
+    padding: 1vh 0 1vh 0;
+}
+
+tr
+{
+    border-bottom: 0.1vh solid black;
+}
+
+tr:hover
+{
+    background-color: rgba(204, 204, 204, 0.3);
+}

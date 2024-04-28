@@ -1,0 +1,69 @@
+@if(!table)
+{
+    <p class="error">No table to work with</p>
+}
+@else
+{
+    <button nz-button nzType="primary" nzShape="circle" nz-tooltip nzTooltipTitle="Add new row" nzTooltipPlacement="bottom" (click)="addNewRow()">
+        <span nz-icon nzType="plus"></span>
+    </button>
+
+    @if(table.rows!.length > 0)
+    {
+        <nz-divider nzType="vertical"></nz-divider>
+
+        <button nz-button nzType="primary" nzShape="circle" nz-tooltip nzTooltipTitle="Send rows to database" nzTooltipPlacement="bottom" (click)="sendRows()">
+            <span nz-icon nzType="check"></span>
+        </button>
+    }
+
+    <nz-divider></nz-divider>
+
+    <table>
+        <thead>
+            <tr>
+                @for(column of table.columns; track column)
+                {
+                    <th>{{ column.name }}</th>
+                }
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(row of table.rows; track row; let index = $index)
+        {
+            <tr>
+                @if(editCache[index].edit)
+                {
+                    @for(column of table.columns; track column)
+                    {
+                        <td><input [type]="getInputType(column)" nz-input [(ngModel)]="editCache[index].data[column.name]" /></td>
+                    }
+                    <td>
+                        <a nz-button nzType="text" (click)="saveEdit(index)"><span style="color: #40a9ff">Save</span></a>
+                        <a nz-button nzType="text" nzDanger nz-popconfirm nzPopconfirmTitle="Are you sure you want to cancel?" (nzOnConfirm)="cancelEdit(index)">Cancel</a>
+                    </td>
+                }
+                @else
+                {
+                    @for(column of table.columns; track column)
+                    {
+                        @if(column.type === ValueType.DATE)
+                        {
+                            <td>{{ row[column.name] | date:'dd/MM/yyyy' }}</td>
+                        }
+                        @else
+                        {
+                            <td>{{ row[column.name] }}</td>
+                        }
+                    }
+                    <td>
+                        <a nz-button nzType="text" (click)="startEdit(index)"><span style="color: #40a9ff">Edit</span></a>
+                        <a nz-button nzType="text" nzDanger nz-popconfirm nzPopconfirmTitle="Are you sure you want to delete this row?" (nzOnConfirm)="deleteRow(index)">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+}
