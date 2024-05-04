@@ -64,7 +64,6 @@ export class WorkspaceViewComponent implements OnInit
         this.tableService.getUserTables((tables) => {
             this.tables = tables
             this.fetchingTables = false
-            console.log('a')
         }, (error) => {
             this.messageService.error('Failed to fetch tables: ' + error.message)
             this.fetchingTables = false
