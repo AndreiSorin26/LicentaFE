@@ -186,7 +186,7 @@ export class AddItemsTabComponent implements OnInit
             }))
         }
 
-        Promise.all(requests).then((results) => {
+        Promise.all(requests).then(() => {
             this.fileRowsUploadStatus = 'success'
             this.messageService.success('Rows inserted successfully')
             setTimeout(() => this.closeProgressBar(), 2000);

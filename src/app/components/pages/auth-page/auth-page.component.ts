@@ -51,11 +51,9 @@ export class AuthPageComponent
     showLoginForm: boolean = true
 
     validateRegisterForm: FormGroup<{
-        username: FormControl<string>;
         email: FormControl<string>;
         password: FormControl<string>;
     }> = this.fb.group({
-        username: ['', [Validators.required]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]]
     })
