@@ -54,14 +54,14 @@ export class TableService
         });
     }
 
-    queryTable(query: string, model: string, handleOk?: (response: Dictionary) => void, handleError?: (error: HttpErrorResponse) => void)
+    queryTable(query: string, tableName: string, model: string, handleOk?: (response: Dictionary) => void, handleError?: (error: HttpErrorResponse) => void)
     {
         const headers =
             {
                 'Authorization': `${this.cookieService.get('token')}`
             }
 
-        return this.http.post<Dictionary>(Routes.TABLE.QUERY_TABLE, {query, model}, {headers}).subscribe({
+        return this.http.post<Dictionary>(Routes.TABLE.QUERY_TABLE, {query, tableName, model}, {headers}).subscribe({
             next: response => handleOk && handleOk(response),
             error: err => handleError && handleError(err)
         })

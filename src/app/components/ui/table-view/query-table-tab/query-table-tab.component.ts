@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import {NzInputDirective, NzInputGroupComponent} from "ng-zorro-antd/input";
 import {NzButtonComponent} from "ng-zorro-antd/button";
 import {NzIconDirective} from "ng-zorro-antd/icon";
@@ -8,6 +8,7 @@ import {NzMessageService} from "ng-zorro-antd/message";
 import { Dictionary } from '../../../../constants';
 import {NzOptionComponent, NzSelectComponent} from "ng-zorro-antd/select";
 import {NzDividerComponent} from "ng-zorro-antd/divider";
+import {Table} from "../../workspace-view/interfaces/table";
 
 @Component({
   selector: 'app-query-table-tab',
@@ -27,6 +28,8 @@ import {NzDividerComponent} from "ng-zorro-antd/divider";
 })
 export class QueryTableTabComponent
 {
+    @Input() table?: Table
+
     queryText: string = '';
     model: string = 'My Chat';
     result: Dictionary = {};
@@ -37,7 +40,7 @@ export class QueryTableTabComponent
 
     sendQuery()
     {
-        this.tableService.queryTable(this.queryText, this.model, response => {
+        this.tableService.queryTable(this.queryText, this.table!.name, this.model, response => {
             this.result = response
         }, error => {
             this.messageService.error('Error querying table: ' + error.message)
