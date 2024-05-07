@@ -1,7 +1,7 @@
 <nz-select [(ngModel)]="model">
     <nz-option nzLabel="My Chat" nzValue="My Chat"></nz-option>
-    <nz-option nzLabel="ChatGPT" nzValue="ChatGPT"></nz-option>
-    <nz-option nzLabel="LLaMA" nzValue="LLaMA"></nz-option>
+    <nz-option nzLabel="ChatGPT" nzValue="openai"></nz-option>
+    <nz-option nzLabel="LLaMA" nzValue="llama"></nz-option>
 </nz-select>
 
 <nz-divider></nz-divider>
@@ -14,3 +14,53 @@
     </ng-template>
     <input type="text" nz-input placeholder="Input query here" [(ngModel)]="queryText"/>
 </nz-input-group>
+
+<nz-divider></nz-divider>
+
+@if(querying)
+{
+    <nz-spin></nz-spin>
+}
+@else if(result)
+{
+    <div
+        class="wrapper"
+        nz-flex
+        nzJustify="center"
+        nzAlign="center"
+    >
+        <h1 class="highlight" nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery()">
+            {{result}}
+        </h1>
+
+    </div>
+
+    <nz-divider></nz-divider>
+
+    @if(runningQuery)
+    {
+        <nz-spin></nz-spin>
+    }
+    @else
+    {
+        <table>
+            <thead>
+                @for(column of tableResult?.columnNames; track column)
+                {
+                    <th>{{column}}</th>
+                }
+            </thead>
+            <tbody>
+                @for(value of tableResult?.values; track value)
+                {
+                    <tr>
+                        @for(column of tableResult?.columnNames; track column)
+                        {
+                            <td>{{value[column]}}</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}

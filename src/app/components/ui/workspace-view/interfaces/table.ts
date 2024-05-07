@@ -2,10 +2,8 @@ import {Dictionary} from "../../../../constants";
 
 export enum ValueType
 {
-    STRING = 'String',
-    INTEGER = 'Integer',
-    FLOAT = 'Float',
-    DATE = 'Date'
+    STRING = 'Text',
+    INTEGER = 'Integer'
 }
 
 export interface TableColumn
@@ -18,5 +16,5 @@ export interface Table
 {
     name: string
     columns: TableColumn[]
-    rows?: Dictionary[]
+    values?: Dictionary[]
 }

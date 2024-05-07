@@ -23,10 +23,10 @@ export class AuthService
         })
     }
 
-    register(registerRequest: RegisterRequest, handleOk?: (response: LoginResponse) => void, handleError?: (error: HttpErrorResponse) => void)
+    register(registerRequest: RegisterRequest, handleOk?: (response: string) => void, handleError?: (error: HttpErrorResponse) => void)
     {
-        return this.http.post(Routes.AUTH.REGISTER, registerRequest).subscribe({
-            next: response => handleOk && handleOk(response as LoginResponse),
+        return this.http.post(Routes.AUTH.REGISTER, registerRequest, {responseType: "text"}).subscribe({
+            next: response => handleOk && handleOk(response),
             error: err => handleError && handleError(err)
         })
     }

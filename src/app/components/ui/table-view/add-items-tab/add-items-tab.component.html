@@ -28,7 +28,7 @@
         <nz-progress [nzPercent]="fileRowsUploadProgress" [nzStatus]="fileRowsUploadStatus"></nz-progress>
     }
 
-    @if(table.rows!.length > 0)
+    @if(table.values!.length > 0)
     {
         <nz-divider nzType="vertical"></nz-divider>
 
@@ -41,7 +41,7 @@
     {
         <nz-spin></nz-spin>
     }
-    @else if(table.rows!.length > 0)
+    @else if(table.values!.length > 0)
     {
         <nz-divider></nz-divider>
 
@@ -56,7 +56,7 @@
             </tr>
             </thead>
             <tbody>
-                @for(row of table.rows; track row; let index = $index)
+                @for(row of table.values; track row; let index = $index)
                 {
                     <tr>
                         @if(editCache[index].edit)
@@ -74,14 +74,7 @@
                         {
                             @for(column of table.columns; track column)
                             {
-                                @if(column.type === ValueType.DATE)
-                                {
-                                    <td>{{ row[column.name] | date:'dd/MM/yyyy' }}</td>
-                                }
-                                @else
-                                {
-                                    <td>{{ row[column.name] }}</td>
-                                }
+                                <td>{{ row[column.name] }}</td>
                             }
                             <td>
                                 <a nz-button nzType="text" (click)="startEdit(index)"><span style="color: #40a9ff">Edit</span></a>

@@ -82,12 +82,14 @@ export class AuthPageComponent
         {
             const loginRequest = this.validateLoginForm.value as LoginRequest
             this.authService.login(loginRequest, (response: LoginResponse) => {
-                this.cookieService.set('token', `${response.type} ${response.token}`)
+                this.cookieService.set('token', `${response.token_type} ${response.access_token}`)
                 this.router.navigate(['/home']).then()
             },
             (error: HttpErrorResponse) => {
-                console.log(error)
-                this.message.error(error.message)
+                if(error.status === 403)
+                    this.message.error('Invalid credentials')
+                else
+                    this.message.error(error.message)
             })
         }
         else
@@ -108,6 +110,7 @@ export class AuthPageComponent
         if (this.validateRegisterForm.valid)
         {
             const registerRequest = this.validateRegisterForm.value as RegisterRequest
+            registerRequest.username = 'John Doe'
             this.authService.register(registerRequest, () => {
                     this.message.success('Registered successfully')
                     this.showLoginForm = true

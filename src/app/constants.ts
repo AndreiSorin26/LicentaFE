@@ -1,19 +1,25 @@
-export const BACKEND_BASE_URL = 'http://localhost:8000';
+export const BACKEND_BASE_URL = (port: number) => `http://localhost:${port}/api/v1`;
+
+export const AUTH_PORT = 8090
+export const BACKEND_AUTH_URL = BACKEND_BASE_URL(AUTH_PORT)
+
+export const PROXY_PORT = 8091
+export const BACKEND_PROXY_URL = BACKEND_BASE_URL(PROXY_PORT)
 
 export const Routes =
     {
-        BACKEND_BASE_URL,
         AUTH:
             {
-                LOGIN: `${BACKEND_BASE_URL}/auth/login`,
-                REGISTER: `${BACKEND_BASE_URL}/auth/register`,
+                LOGIN: `${BACKEND_AUTH_URL}/auth/login`,
+                REGISTER: `${BACKEND_AUTH_URL}/auth/register`,
             },
         TABLE:
             {
-                ADD_TABLE: `${BACKEND_BASE_URL}/table/add_table`,
-                GET_USER_TABLES: `${BACKEND_BASE_URL}/table/get_user_tables`,
-                INSERT_INTO_TABLE: `${BACKEND_BASE_URL}/table/insert_into_table`,
-                QUERY_TABLE: `${BACKEND_BASE_URL}/table/query_table`
+                ADD_TABLE: `${BACKEND_PROXY_URL}/table/create`,
+                GET_USER_TABLES: `${BACKEND_PROXY_URL}/table/get`,
+                INSERT_INTO_TABLE: `${BACKEND_PROXY_URL}/table/insert`,
+                QUERY_TABLE: (model: string) => `${BACKEND_PROXY_URL}/${model}/chat`,
+                RUN_QUERY: `${BACKEND_PROXY_URL}/table/run`
             }
     };
 

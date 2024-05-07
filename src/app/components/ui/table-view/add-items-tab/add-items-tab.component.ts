@@ -68,10 +68,10 @@ export class AddItemsTabComponent implements OnInit
         if(!this.table)
             return;
 
-        if(!this.table.rows)
-            this.table.rows = []
+        if(!this.table.values)
+            this.table.values = []
 
-        this.table.rows.forEach( (row, index) => this.editCache[index] = {edit: false, data: row})
+        this.table.values.forEach( (row, index) => this.editCache[index] = {edit: false, data: row})
     }
 
     addNewRow()
@@ -79,16 +79,14 @@ export class AddItemsTabComponent implements OnInit
         const newRow: Dictionary = {}
         for(let column of this.table!.columns)
         {
-            if(column.type === ValueType.FLOAT || column.type === ValueType.INTEGER)
+            if(column.type === ValueType.INTEGER)
                 newRow[column.name] = 0
-            else if(column.type === ValueType.DATE)
-                newRow[column.name] = new Date()
             else
                 newRow[column.name] = "Empty"
         }
 
-        this.table!.rows!.push(newRow)
-        this.editCache[this.table!.rows!.length - 1] = {edit: false, data: newRow}
+        this.table!.values!.push(newRow)
+        this.editCache[this.table!.values!.length - 1] = {edit: false, data: newRow}
     }
 
     startEdit(index: number)
@@ -99,28 +97,26 @@ export class AddItemsTabComponent implements OnInit
     saveEdit(index: number)
     {
         this.editCache[index].edit = false
-        this.table!.rows![index] = {...this.editCache[index].data}
+        this.table!.values![index] = {...this.editCache[index].data}
         console.log(this.table)
     }
 
     cancelEdit(index: number)
     {
         this.editCache[index].edit = false
-        this.editCache[index].data = {...this.table!.rows![index]}
+        this.editCache[index].data = {...this.table!.values![index]}
     }
 
     getInputType(column: TableColumn)
     {
-        if(column.type === ValueType.FLOAT || column.type ===  ValueType.INTEGER)
+        if(column.type ===  ValueType.INTEGER)
             return 'number'
-        else if(column.type == ValueType.DATE)
-            return 'date'
         return 'text'
     }
 
     deleteRow(index: number)
     {
-        this.table!.rows!.splice(index, 1)
+        this.table!.values!.splice(index, 1)
         delete this.editCache[index]
     }
 
@@ -129,7 +125,7 @@ export class AddItemsTabComponent implements OnInit
         this.sendingRows = true
         this.tableService.insertIntoTable(this.table!, () => {
             this.messageService.success('Rows inserted successfully')
-            this.table!.rows = []
+            this.table!.values = []
             this.editCache = {}
             this.sendingRows = false
         }, (error) => {

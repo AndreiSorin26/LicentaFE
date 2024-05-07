@@ -1,9 +1,10 @@
-import {Dictionary, Routes} from "../../constants";
+import {Routes} from "../../constants";
 import {Table} from "../../components/ui/workspace-view/interfaces/table";
 
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
+import {RunQueryResponse} from "./interfaces/run-query-response";
 
 @Injectable({
   providedIn: 'root'
@@ -54,14 +55,27 @@ export class TableService
         });
     }
 
-    queryTable(query: string, tableName: string, model: string, handleOk?: (response: Dictionary) => void, handleError?: (error: HttpErrorResponse) => void)
+    queryTable(text: string, tableName: string, model: string, handleOk?: (response: string) => void, handleError?: (error: HttpErrorResponse) => void)
     {
         const headers =
             {
                 'Authorization': `${this.cookieService.get('token')}`
             }
 
-        return this.http.post<Dictionary>(Routes.TABLE.QUERY_TABLE, {query, tableName, model}, {headers}).subscribe({
+        return this.http.post(Routes.TABLE.QUERY_TABLE(model), {text, tableName}, {headers, responseType: "text"}).subscribe({
+            next: response => handleOk && handleOk(response),
+            error: err => handleError && handleError(err)
+        })
+    }
+
+    runQuery(query: string, handleOk?: (response: RunQueryResponse) => void, handleError?: (error: HttpErrorResponse) => void)
+    {
+        const headers =
+            {
+                'Authorization': `${this.cookieService.get('token')}`
+            }
+
+        return this.http.post<RunQueryResponse>(Routes.TABLE.RUN_QUERY, {query}, {headers}).subscribe({
             next: response => handleOk && handleOk(response),
             error: err => handleError && handleError(err)
         })
