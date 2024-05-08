@@ -3,7 +3,7 @@ import {LoginRequest} from "../../../services/auth/interfaces/login-request";
 import {LoginResponse} from "../../../services/auth/interfaces/login-response";
 import {RegisterRequest} from "../../../services/auth/interfaces/register-request";
 
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NzFlexDirective} from "ng-zorro-antd/flex";
 import {NzButtonComponent} from "ng-zorro-antd/button";
 import {NzFormControlComponent, NzFormDirective, NzFormItemComponent} from "ng-zorro-antd/form";
@@ -46,7 +46,7 @@ import {Router} from "@angular/router";
   styleUrl: './auth-page.component.css'
 })
 
-export class AuthPageComponent
+export class AuthPageComponent implements OnInit
 {
     showLoginForm: boolean = true
 
@@ -75,6 +75,12 @@ export class AuthPageComponent
                 private router: Router)
     {}
 
+    ngOnInit()
+    {
+        this.authService.checkToken(() => {
+            this.router.navigate(['/home']).then()
+        })
+    }
 
     login(): void
     {

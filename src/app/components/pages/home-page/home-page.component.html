@@ -10,6 +10,10 @@
                 <span nz-icon nzType="edit"></span>
                 <span>Prompt Examples</span>
             </li>
+            <li nz-menu-item (click)="location = ['Statistics']">
+                <span nz-icon nzType="bar-chart"></span>
+                <span>Statistics</span>
+            </li>
         </ul>
     </nz-sider>
     <nz-layout class="right-layout">
@@ -35,6 +39,10 @@
                 @case('Prompt Examples')
                 {
                     <app-prompt-examples-view></app-prompt-examples-view>
+                }
+                @case('Statistics')
+                {
+                    <app-statistics-view></app-statistics-view>
                 }
             }
         </nz-content>

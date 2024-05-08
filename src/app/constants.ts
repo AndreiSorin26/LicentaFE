@@ -12,6 +12,7 @@ export const Routes =
             {
                 LOGIN: `${BACKEND_AUTH_URL}/auth/login`,
                 REGISTER: `${BACKEND_AUTH_URL}/auth/register`,
+                TOKEN: `${BACKEND_AUTH_URL}/auth/token`
             },
         TABLE:
             {
@@ -20,6 +21,10 @@ export const Routes =
                 INSERT_INTO_TABLE: `${BACKEND_PROXY_URL}/table/insert`,
                 QUERY_TABLE: (model: string) => `${BACKEND_PROXY_URL}/${model}/chat`,
                 RUN_QUERY: `${BACKEND_PROXY_URL}/table/run`
+            },
+        HISTORY:
+            {
+                SUCCESS_RATE: `${BACKEND_PROXY_URL}/history/getSuccessRate`,
             }
     };
 

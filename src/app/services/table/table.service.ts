@@ -68,14 +68,14 @@ export class TableService
         })
     }
 
-    runQuery(query: string, handleOk?: (response: RunQueryResponse) => void, handleError?: (error: HttpErrorResponse) => void)
+    runQuery(query: string, model: string, naturalLanguage: string, handleOk?: (response: RunQueryResponse) => void, handleError?: (error: HttpErrorResponse) => void)
     {
         const headers =
             {
                 'Authorization': `${this.cookieService.get('token')}`
             }
 
-        return this.http.post<RunQueryResponse>(Routes.TABLE.RUN_QUERY, {query}, {headers}).subscribe({
+        return this.http.post<RunQueryResponse>(Routes.TABLE.RUN_QUERY, {query, model, naturalLanguage}, {headers}).subscribe({
             next: response => handleOk && handleOk(response),
             error: err => handleError && handleError(err)
         })

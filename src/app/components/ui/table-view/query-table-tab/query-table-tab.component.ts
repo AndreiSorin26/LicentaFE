@@ -54,6 +54,7 @@ export class QueryTableTabComponent
     {
         this.querying = true
         this.tableResult = undefined
+        this.result = undefined
         this.tableService.queryTable(this.queryText, this.table!.name, this.model, response => {
             this.result = response
             this.querying = false
@@ -69,7 +70,7 @@ export class QueryTableTabComponent
             return;
 
         this.runningQuery = true;
-        this.tableService.runQuery(this.result, response => {
+        this.tableService.runQuery(this.result, this.model, this.queryText, response => {
             this.runningQuery = false
             this.tableResult = response
         }, error => {

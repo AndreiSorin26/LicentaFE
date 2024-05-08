@@ -43,24 +43,38 @@
     }
     @else
     {
-        <table>
-            <thead>
-                @for(column of tableResult?.columnNames; track column)
-                {
-                    <th>{{column}}</th>
-                }
-            </thead>
-            <tbody>
-                @for(value of tableResult?.values; track value)
-                {
-                    <tr>
-                        @for(column of tableResult?.columnNames; track column)
-                        {
-                            <td>{{value[column]}}</td>
-                        }
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @if(tableResult && !tableResult.values)
+        {
+            <div
+                class="wrapper"
+                nz-flex
+                nzJustify="center"
+                nzAlign="center"
+            >
+                <h1>No entries resulted from executing query</h1>
+            </div>
+        }
+        @else
+        {
+            <table>
+                <thead>
+                    @for(column of tableResult?.columnNames; track column)
+                    {
+                        <th>{{column}}</th>
+                    }
+                </thead>
+                <tbody>
+                    @for(value of tableResult?.values; track value)
+                    {
+                        <tr>
+                            @for(column of tableResult?.columnNames; track column)
+                            {
+                                <td>{{value[column]}}</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
     }
 }
