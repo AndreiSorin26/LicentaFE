@@ -53,6 +53,7 @@ export class QueryTableTabComponent
     sendQuery()
     {
         this.querying = true
+        this.tableResult = undefined
         this.tableService.queryTable(this.queryText, this.table!.name, this.model, response => {
             this.result = response
             this.querying = false
