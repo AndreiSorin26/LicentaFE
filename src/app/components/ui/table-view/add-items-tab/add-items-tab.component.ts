@@ -169,7 +169,7 @@ export class AddItemsTabComponent implements OnInit
                 {
                     name: this.table!.name,
                     columns: this.table!.columns,
-                    rows: rows.slice(index, index + batchSize)
+                    values: rows.slice(index, index + batchSize)
                 }
 
             requests.push(new Promise((resolve, reject) => {

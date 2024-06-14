@@ -13,7 +13,6 @@ import {NzBreadCrumbComponent, NzBreadCrumbItemComponent} from "ng-zorro-antd/br
 import {TableViewComponent} from "../../ui/table-view/table-view.component";
 import {Table} from "../../ui/workspace-view/interfaces/table";
 import {NzButtonComponent} from "ng-zorro-antd/button";
-import {ta_IN} from "ng-zorro-antd/i18n";
 import {PromptExamplesViewComponent} from "../../ui/prompt-examples-view/prompt-examples-view.component";
 import {StatisticsViewComponent} from "../../ui/statistics-view/statistics-view.component";
 
@@ -66,6 +65,4 @@ export class HomePageComponent
     {
         this.location = this.location.slice(0, index + 1)
     }
-
-    protected readonly ta_IN = ta_IN;
 }

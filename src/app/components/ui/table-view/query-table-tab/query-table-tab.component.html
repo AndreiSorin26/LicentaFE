@@ -1,5 +1,5 @@
 <nz-select [(ngModel)]="model">
-    <nz-option nzLabel="My Chat" nzValue="My Chat"></nz-option>
+    <nz-option nzLabel="SQLHaters" nzValue="sqlhaters"></nz-option>
     <nz-option nzLabel="ChatGPT" nzValue="openai"></nz-option>
     <nz-option nzLabel="LLaMA" nzValue="llama"></nz-option>
 </nz-select>
@@ -23,17 +23,42 @@
 }
 @else if(result)
 {
-    <div
-        class="wrapper"
-        nz-flex
-        nzJustify="center"
-        nzAlign="center"
-    >
-        <h1 class="highlight" nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery()">
-            {{result}}
-        </h1>
+    @if(!result.sql_context)
+    {
+        <div
+            class="wrapper"
+            nz-flex
+            nzJustify="center"
+            nzAlign="center"
+        >
+            <h1 class="highlight" nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_query)">
+                {{result.sql_query}}
+            </h1>
 
-    </div>
+        </div>
+    }
+    @else
+    {
+        <div
+            class="wrapper"
+            nz-flex
+            nzJustify="space-evenly"
+            nzAlign="center"
+        >
+            <div class="highlight">
+                <p>Direct Model:</p>
+                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_query)">
+                    {{result.sql_query}}
+                </h1>
+            </div>
+            <div class="highlight">
+                <p>Multistep Model:</p>
+                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_context)">
+                    {{result.sql_context}}
+                </h1>
+            </div>
+        </div>
+    }
 
     <nz-divider></nz-divider>
 

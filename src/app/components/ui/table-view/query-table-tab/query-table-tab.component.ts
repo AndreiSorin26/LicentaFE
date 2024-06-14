@@ -12,6 +12,7 @@ import {NzSpinComponent} from "ng-zorro-antd/spin";
 import {NzFlexDirective} from "ng-zorro-antd/flex";
 import {NzPopoverDirective} from "ng-zorro-antd/popover";
 import {RunQueryResponse} from "../../../../services/table/interfaces/run-query-response";
+import {SqlhatersResponse} from "../../../../services/table/interfaces/sqlhaters-response";
 
 @Component({
     selector: 'app-query-table-tab',
@@ -38,10 +39,10 @@ export class QueryTableTabComponent
     @Input() table?: Table
 
     queryText: string = ''
-    model: string = 'My Chat'
+    model: string = 'sqlhaters'
 
     querying: boolean = false
-    result?: string
+    result?: SqlhatersResponse
 
     runningQuery: boolean = false
     tableResult?: RunQueryResponse
@@ -64,13 +65,14 @@ export class QueryTableTabComponent
         })
     }
 
-    runQuery()
+    runQuery(query: string)
     {
         if(!this.result)
             return;
 
         this.runningQuery = true;
-        this.tableService.runQuery(this.result, this.model, this.queryText, response => {
+
+        this.tableService.runQuery(query, this.model, this.queryText, response => {
             this.runningQuery = false
             this.tableResult = response
         }, error => {
