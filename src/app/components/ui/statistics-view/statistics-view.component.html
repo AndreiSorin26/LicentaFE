@@ -1,3 +1,45 @@
 <div class="card">
     <p-chart type="bar" [data]="data" [options]="options" />
 </div>
+
+<nz-divider nzText="Query Hisotry"></nz-divider>
+
+@if(llmHistory && llmHistory.content)
+{
+    <button style="margin-bottom: 0.3vh" nz-button nzType="dashed" [nzLoading]="loadingLlmHistory" (click)="loadLlmHistory()">Load more</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Natural Language</th>
+                <th>Query</th>
+                <th>Successful Execution</th>
+                <th>Execution Time (s)</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(data of llmHistory.content; track data)
+        {
+            <tr>
+                <td>{{ data.natural_language }}</td>
+                <td>{{ data.query }}</td>
+                <td>
+                    @if(data.success)
+                    {
+                        <nz-tag nzColor="green">SUCCESS</nz-tag>
+                    }
+                    @else
+                    {
+                        <nz-tag nzColor="red">FAILURE</nz-tag>
+                    }
+                </td>
+                <td>{{ data.execution_time / 1e9 }}</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+@else
+{
+    <nz-empty></nz-empty>
+}

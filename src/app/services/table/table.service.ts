@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {RunQueryResponse} from "./interfaces/run-query-response";
-import {SqlhatersResponse} from "./interfaces/sqlhaters-response";
+import {LlmResponse} from "./interfaces/llm-response";
 
 @Injectable({
   providedIn: 'root'
@@ -56,14 +56,14 @@ export class TableService
         });
     }
 
-    queryTable(text: string, tableName: string, model: string, handleOk?: (response: SqlhatersResponse) => void, handleError?: (error: HttpErrorResponse) => void)
+    queryTable(text: string, tableName: string, model: string, handleOk?: (response: LlmResponse) => void, handleError?: (error: HttpErrorResponse) => void)
     {
         const headers =
             {
                 'Authorization': `${this.cookieService.get('token')}`
             }
 
-        return this.http.post<SqlhatersResponse>(Routes.TABLE.QUERY_TABLE(model), {text, tableName}, {headers}).subscribe({
+        return this.http.post<LlmResponse>(Routes.TABLE.QUERY_TABLE(model), {text, tableName}, {headers}).subscribe({
             next: response => handleOk && handleOk(response),
             error: err => handleError && handleError(err)
         })

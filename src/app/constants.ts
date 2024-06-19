@@ -25,6 +25,7 @@ export const Routes =
         HISTORY:
             {
                 SUCCESS_RATE: `${BACKEND_PROXY_URL}/history/getSuccessRate`,
+                LLM_HISTORY: (offset: number, rows: number) => `${BACKEND_PROXY_URL}/history/getHistoryTable/${offset}/${rows}`
             }
     };
 

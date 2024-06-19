@@ -1,4 +1,4 @@
-export interface SqlhatersResponse
+export interface LlmResponse
 {
     sql_query: string;
     sql_syntax?: string;

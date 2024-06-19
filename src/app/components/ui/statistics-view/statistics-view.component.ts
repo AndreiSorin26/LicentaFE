@@ -4,12 +4,23 @@ import {Component, OnInit} from '@angular/core';
 import {NzMessageService} from "ng-zorro-antd/message";
 import {SuccessRate} from "../../../services/statistics/interfaces/success-rate";
 import {ChartModule} from "primeng/chart";
+import {NzDividerComponent} from "ng-zorro-antd/divider";
+import {NzTableComponent} from "ng-zorro-antd/table";
+import {LlmHistory} from "../../../services/statistics/interfaces/llm-history";
+import {NzTagComponent} from "ng-zorro-antd/tag";
+import {NzEmptyComponent} from "ng-zorro-antd/empty";
+import {NzButtonComponent} from "ng-zorro-antd/button";
 
 @Component({
   selector: 'app-statistics-view',
   standalone: true,
     imports: [
-        ChartModule
+        ChartModule,
+        NzDividerComponent,
+        NzTableComponent,
+        NzTagComponent,
+        NzEmptyComponent,
+        NzButtonComponent
     ],
   templateUrl: './statistics-view.component.html',
   styleUrl: './statistics-view.component.css'
@@ -21,21 +32,21 @@ export class StatisticsViewComponent implements OnInit
     data: any
     options: any
 
+    loadingLlmHistory: boolean = false
+    llmHistory?: LlmHistory
+    offset: number = 0
+    rows: number = 2
+
     constructor(private statisticsService: StatisticsService,
                 private messageService: NzMessageService)
     {}
 
     ngOnInit()
     {
+        this.offset = 0
         this.loadingSuccessRate = true
-        this.statisticsService.getSuccessRate((response) => {
-            this.parseOptions()
-            this.parseData(response.modelSuccessDtoList)
-            this.loadingSuccessRate = false
-        }, (error) => {
-            this.loadingSuccessRate = false
-            this.messageService.error("Failed to load success rates: " + error.message)
-        })
+        this.loadSuccessRate()
+        this.loadLlmHistory()
     }
 
     parseData(successRates: SuccessRate[])
@@ -106,4 +117,37 @@ export class StatisticsViewComponent implements OnInit
         };
     }
 
+    loadSuccessRate()
+    {
+        this.statisticsService.getSuccessRate((response) => {
+            this.parseOptions()
+            this.parseData(response.modelSuccessDtoList)
+            this.loadingSuccessRate = false
+        }, (error) => {
+            this.loadingSuccessRate = false
+            this.messageService.error("Failed to load success rates: " + error.message)
+        })
+    }
+
+    loadLlmHistory()
+    {
+        this.loadingLlmHistory = true
+        this.statisticsService.getLlmHistory(this.offset, this.rows, (response) => {
+            if(this.offset == 0)
+                this.llmHistory = response
+            else
+            {
+                if(response.content.length ==0)
+                    this.messageService.success("No more LLM history to load")
+                else
+                    this.llmHistory!.content.push(...response.content)
+            }
+
+            this.offset += 1
+            this.loadingLlmHistory = false
+        }, (error) => {
+            this.loadingLlmHistory = false
+            this.messageService.error("Failed to load LLM history: " + error.message)
+        })
+    }
 }

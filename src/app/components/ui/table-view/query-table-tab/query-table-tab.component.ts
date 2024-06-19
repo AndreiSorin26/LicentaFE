@@ -12,7 +12,7 @@ import {NzSpinComponent} from "ng-zorro-antd/spin";
 import {NzFlexDirective} from "ng-zorro-antd/flex";
 import {NzPopoverDirective} from "ng-zorro-antd/popover";
 import {RunQueryResponse} from "../../../../services/table/interfaces/run-query-response";
-import {SqlhatersResponse} from "../../../../services/table/interfaces/sqlhaters-response";
+import {LlmResponse} from "../../../../services/table/interfaces/llm-response";
 
 @Component({
     selector: 'app-query-table-tab',
@@ -42,7 +42,7 @@ export class QueryTableTabComponent
     model: string = 'sqlhaters'
 
     querying: boolean = false
-    result?: SqlhatersResponse
+    result?: LlmResponse
 
     runningQuery: boolean = false
     tableResult?: RunQueryResponse
