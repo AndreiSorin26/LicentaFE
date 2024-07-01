@@ -47,13 +47,13 @@
         >
             <div class="highlight">
                 <p>Direct Model:</p>
-                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_query)">
+                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_query, '_direct')">
                     {{result.sql_query}}
                 </h1>
             </div>
             <div class="highlight">
                 <p>Multistep Model:</p>
-                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_context)">
+                <h1 nz-popover nzPopoverTitle="Action" nzPopoverContent="Run SQL query" nzPopoverPlacement="bottom" (click)="runQuery(result.sql_context, '_multistep')">
                     {{result.sql_context}}
                 </h1>
             </div>
@@ -81,6 +81,15 @@
         }
         @else
         {
+            @if(shownResults.length > 0)
+            {
+                <button nz-button nzType="primary" nzShape="circle" (click)="previousPage()">
+                    <span nz-icon nzType="left"></span>
+                </button>
+                <button nz-button nzType="primary" nzShape="circle" (click)="nextPage()">
+                    <span nz-icon nzType="right"></span>
+                </button>
+            }
             <table>
                 <thead>
                     @for(column of tableResult?.columnNames; track column)
@@ -89,7 +98,7 @@
                     }
                 </thead>
                 <tbody>
-                    @for(value of tableResult?.values; track value)
+                    @for(value of shownResults; track value)
                     {
                         <tr>
                             @for(column of tableResult?.columnNames; track column)
